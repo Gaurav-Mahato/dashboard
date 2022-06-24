@@ -7,8 +7,11 @@ import {createStore} from "redux"
 import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./reducers";
-import { BrowserRouter as Router } from "react-router-dom";
-const initialState = {}
+const initialState = {
+    userLogin: {
+        user: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : undefined
+    }
+}
 const store = createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunk)));
-ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'))
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
 
