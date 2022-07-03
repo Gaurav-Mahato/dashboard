@@ -1,7 +1,7 @@
 import axios from "axios";
 import { REGISTER_FAILURE, REGISTER_SUCCESS, REGISTER_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from "./types";
 
-export const register = (name,password,email) => async(dispatch) => {
+export const register = (name,password,email,table) => async(dispatch) => {
     try{
         const obj = {
             name,
@@ -9,7 +9,7 @@ export const register = (name,password,email) => async(dispatch) => {
             email
         }
         dispatch({type: REGISTER_REQUEST})
-        const {data} = await axios.post("http://localhost:8080/admin/register",obj)
+        const {data} = await axios.post(`http://localhost:8080/${table}/register`,obj)
         dispatch({type: REGISTER_SUCCESS, payload: data})
     }
     catch(err){
@@ -17,14 +17,14 @@ export const register = (name,password,email) => async(dispatch) => {
     }
 }
 
-export const login = (email, password) => async(dispatch) => {
+export const login = (email, password, table) => async(dispatch) => {
     try{
         const obj = {
             email,
             password
         }
         dispatch({type: LOGIN_REQUEST})
-        const {data} = await axios.post("http://localhost:8080/admin/login",obj)
+        const {data} = await axios.post(`http://localhost:8080/${table}/login`,obj)
         dispatch({type: LOGIN_SUCCESS, payload: data})
         localStorage.setItem("userInfo",JSON.stringify(data))
     }

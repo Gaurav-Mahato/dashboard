@@ -4,7 +4,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { register } from "../actions/authActions";
 import { useNavigate } from "react-router-dom";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({mode}) => {
     const navigate = useNavigate()
     const {user} = useSelector(state => state.userLogin)
     const dispatch = useDispatch()
@@ -13,11 +13,11 @@ const RegisterScreen = () => {
     const [email,setEmail] = useState('')
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(register(name,password,email))
+        dispatch(register(name,password,email,mode))
     }
     useEffect(() => {
         if(user){
-            navigate('/login')
+            navigate('/admin-login')
         }
     },[user,navigate])
     return(

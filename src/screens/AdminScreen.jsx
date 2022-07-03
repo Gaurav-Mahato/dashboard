@@ -24,7 +24,7 @@ const AdminScreen = () => {
     }
     useEffect(() => {
         if(user === undefined || user === {}){
-            navigate("/register")
+            navigate("/admin-register")
         }
     },[navigate,user])
     const logoutHandler = (e) => {

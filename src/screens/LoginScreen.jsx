@@ -3,23 +3,24 @@ import {Form, Button} from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import {login} from "../actions/authActions"
 import { useNavigate } from "react-router-dom"
-const LoginScreen = () => {
+const LoginScreen = ({mode}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {user} = useSelector(state => state.userLogin)
+    const {user,error} = useSelector(state => state.userLogin)
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(login(email,password))
+        dispatch(login(email,password,mode))
     }
     useEffect(() => {
         if(user){
-            navigate("/admin-panel")
+            navigate(`/${mode}`)
         }
     },[navigate,user])
     return (
         <>
+            {error && <p>{error.message}</p>}
             <h3>Login Screen</h3>
             <Form onSubmit={submitHandler}>
                 <label htmlFor="email">Email: </label>
