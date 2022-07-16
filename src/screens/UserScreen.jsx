@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import BarChart from "../components/BarChart"
 import { arrayMaker, valueMaker } from "../utils/dataGenerator"
+import BarGraph from "../components/BarGraph"
 
 const UserScreen = () => {
     const dispatch = useDispatch()
@@ -45,6 +46,7 @@ const UserScreen = () => {
             }
         }
         axios.post('http://localhost:8080/data/branch',{plant_name},config).then(res => setPlantData(res.data))
+
     }
     const [location, setLocation] = useState(() => {
         if(user){
@@ -77,29 +79,19 @@ const UserScreen = () => {
             <h3>Plants</h3>
             {location && location.plant.map(plant => <p key={plant.plant_id} onClick={plantHandler}>{plant.name}</p>)}
             <Button onClick={logoutHandler}>Log Out</Button>
+            
+            
             {zoneData.length !== 0 ? <div>Zones Loaded</div> : <div>No zones to display yet.</div>}
             {branchData.length !== 0 ? <div>Branches Loaded</div> : <div>No branches to display yet.</div>}
             {plantData.length !== 0 ? <div>Plants Loaded</div> : <div>No plants to display yet.</div>}
-            {zoneData && zoneData.length !== 0 ? <div style={{"width": "700px", "marginBottom": "40px"}}><BarChart chartData={{
-                labels: arrayMaker(zoneData,'Material Number'),
-                datasets: [
-                    {
-                        label: 'Billed Quantity',
-                        data : valueMaker(zoneData,'Material Number'),
-                        backgroundColor: 'red'
-                    }
-                ]
-            }} /></div> : null}
-            {branchData && branchData.length !== 0 ? <div style={{"width": "700px", "marginBottom": "40px"}}><BarChart chartData={{
-                labels: arrayMaker(branchData,'Material Number'),
-                datasets: [
-                    {
-                        label: 'Billed Quantity',
-                        data : valueMaker(branchData,'Material Number'),
-                        backgroundColor: 'blue'
-                    }
-                ]
-            }} /></div> : null}
+
+
+
+            {zoneData && zoneData.length !== 0 ? <BarGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={branchData} distinction="Material Number" quantity="Billed Quantity" colour="red" />: null}
+            {branchData && branchData.length !== 0 ? <BarGraph name={`Material-Wise Data of ${branchData[0].Region}`} data={branchData} distinction="Material Number" quantity="Billed Quantity" colour="blue" />: null}
+            {zoneData && zoneData.length !== 0 ? <BarGraph name={`Customer Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Customer group" quantity="Billed Quantity" colour="red" />: null}
+            {zoneData && zoneData.length !== 0 ? <BarGraph name="MOM analysis" data={zoneData} distinction="Customer group" quantity="MOM" colour="red" />: null}
+            {zoneData && zoneData.length !== 0 ? <BarGraph name="PAM analysis" data={zoneData} distinction="Customer group" quantity="PAM" colour="red" />: null}
         </>
     )
 }

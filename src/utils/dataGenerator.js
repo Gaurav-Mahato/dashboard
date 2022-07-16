@@ -3,24 +3,27 @@ let usingFilter = (arr) => {
         return arr.indexOf(item) == index;  
     });  
 } 
+
+// arrayMaker generates the array with unique elements
 const arrayMaker = (sendingData,str) => {
     let arr = []
     Object.keys(sendingData).forEach(key => {
       arr.push(sendingData[key][str])
     })
-    console.log(usingFilter(arr))
     return usingFilter(arr)
 }
-const valueMaker = (sendingData,str) => {
+
+// valueMaker generates the value of Billed Quantity in every individual elements
+const valueMaker = (sendingData,str,property) => {
     const s = []
     for(let i=0;i<arrayMaker(sendingData,str).length;i++){
         let qt = []
         Object.keys(sendingData).forEach(key => {
             if(sendingData[key][str] === arrayMaker(sendingData,str)[i]){
-                qt.push(sendingData[key]['Billed Quantity'])
+                qt.push(sendingData[key][property])
             }
         })
-        const sumEntry = qt.reduce((acc, curr) => acc + curr)
+        const sumEntry = qt.reduce((acc, curr) => acc + ((typeof curr) === 'number' ? curr : parseFloat(curr.replace(/,/g,''))),0)
         s.push(sumEntry)
     }
     return s;
