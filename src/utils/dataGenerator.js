@@ -13,7 +13,7 @@ const arrayMaker = (sendingData,str) => {
     return usingFilter(arr)
 }
 
-// valueMaker generates the value of Billed Quantity in every individual elements
+// valueMaker generates the value of 'property' in every individual elements
 const valueMaker = (sendingData,str,property) => {
     const s = []
     for(let i=0;i<arrayMaker(sendingData,str).length;i++){
@@ -29,4 +29,26 @@ const valueMaker = (sendingData,str,property) => {
     return s;
 }
 
-export {arrayMaker, valueMaker}
+// weightedMeanMaker generates the weighted mean value of 'property' 
+const weightedMeanMaker = (sendingData, str, property) => {
+    const s = []
+    for(let i=0;i<arrayMaker(sendingData,str).length;i++){
+        let qt = []
+        let prop = []
+        Object.keys(sendingData).forEach(key => {
+            if(sendingData[key][str] === arrayMaker(sendingData,str)[i]){
+                qt.push(sendingData[key]['Billed Quantity'])
+                prop.push(sendingData[key][property])
+            }
+        })
+        let sumEntry = 0
+        for(let j=0;j<qt.length;j++){
+            sumEntry+= qt[j] * prop[j]
+        }
+        const sumOfQuantity = qt.reduce((acc,curr) => acc + curr)
+        s.push(sumEntry/sumOfQuantity)
+    }
+    return s;
+}
+
+export {arrayMaker, valueMaker, weightedMeanMaker}

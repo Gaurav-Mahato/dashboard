@@ -4,9 +4,8 @@ import {logout} from "../actions/authActions"
 import {Button} from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import BarChart from "../components/BarChart"
-import { arrayMaker, valueMaker } from "../utils/dataGenerator"
-import BarGraph from "../components/BarGraph"
+import { BarGraph } from "../components/BarGraph"
+import LineGraph from "../components/LineGraph"
 
 const UserScreen = () => {
     const dispatch = useDispatch()
@@ -87,11 +86,18 @@ const UserScreen = () => {
 
 
 
-            {zoneData && zoneData.length !== 0 ? <BarGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={branchData} distinction="Material Number" quantity="Billed Quantity" colour="red" />: null}
+            {zoneData && zoneData.length !== 0 ? <BarGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Material Number" quantity="Billed Quantity" colour="red" />: null}
             {branchData && branchData.length !== 0 ? <BarGraph name={`Material-Wise Data of ${branchData[0].Region}`} data={branchData} distinction="Material Number" quantity="Billed Quantity" colour="blue" />: null}
             {zoneData && zoneData.length !== 0 ? <BarGraph name={`Customer Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Customer group" quantity="Billed Quantity" colour="red" />: null}
             {zoneData && zoneData.length !== 0 ? <BarGraph name="MOM analysis" data={zoneData} distinction="Customer group" quantity="MOM" colour="red" />: null}
             {zoneData && zoneData.length !== 0 ? <BarGraph name="PAM analysis" data={zoneData} distinction="Customer group" quantity="PAM" colour="red" />: null}
+            {branchData && branchData.length !== 0 ? <BarGraph name={`Plant-Wise Data of ${branchData[0].Region}`} data={branchData} distinction="Plant" quantity="Billed Quantity" colour="blue" /> : null} 
+            {/* {branchData && branchData.length !== 0 ? <BarGraph name={`PAM Analysis of ${branchData[0].Region}`} data={branchData} distinction="Plant" quantity="PAM" colour="blue" /> : null} 
+            {branchData && branchData.length !== 0 ? <BarGraph name={`MOM Analysis of ${branchData[0].Region}`} data={branchData} distinction="Plant" quantity="MOM" colour="blue" /> : null}  */}
+            {branchData && branchData.length !== 0 ? <LineGraph name={`MOM PAM asp analysis of Customer Group of ${branchData[0].Region}`} data={branchData} distinction="Customer group" /> : null}
+            {branchData && branchData.length !== 0 ? <BarGraph name={`Customer Data MOM analysis of ${branchData[0].Region}`} data={branchData} distinction="Customer group" quantity="MOM" colour="blue" /> : null}
+            {branchData && branchData.length !== 0 ? <BarGraph name={`Customer Data PAM analysis of ${branchData[0].Region}`} data={branchData} distinction="Customer group" quantity="PAM" colour="blue" /> : null} 
+            {/* {branchData && branchData.length !== 0 ? <AvgBarGraph name="Plant-wise asp avg graph" data={branchData} distinction="Plant" colour="blue" quantity="asp" /> : null} */}
         </>
     )
 }

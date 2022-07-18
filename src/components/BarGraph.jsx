@@ -20,4 +20,22 @@ const BarGraph = ({data,name,quantity,distinction,colour}) => {
   )
 }
 
-export default BarGraph
+// const AvgBarGraph = ({data,name,distinction, colour, quantity}) => {
+//   return(
+//     <div style={{width: '700px', marginBottom: '40px'}}>
+//        <h3>{name}</h3>
+//        <BarChart chartData={{
+//         labels: arrayMaker(data,distinction),
+//         datasets: [
+//           {
+//             label: quantity,
+//             data: meanMaker(data,distinction,quantity),
+//             backgroundColor: colour
+//           }
+//         ]
+//        }} />
+//     </div>
+//   )
+// } 
+
+export {BarGraph}
