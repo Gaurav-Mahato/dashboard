@@ -1,6 +1,6 @@
 import React from "react"
 import LineChart from "./LineChart"
-import { arrayMaker, valueMaker, weightedMeanMaker } from "../utils/dataGenerator"
+import { arrayMaker, weightedMeanMaker, meanMaker } from "../utils/dataGenerator"
 
 const LineGraph = ({data,name,distinction}) => {
     return (
@@ -11,13 +11,13 @@ const LineGraph = ({data,name,distinction}) => {
                   datasets: [
                       {
                           label: 'PAM',
-                          data : valueMaker(data,distinction,'PAM'),
+                          data : meanMaker(data,distinction,'PAM'),
                           backgroundColor: 'red',
                           borderColor: 'red'
                       },
                       {
                         label: 'MOM',
-                        data: valueMaker(data,distinction,'MOM'),
+                        data: meanMaker(data,distinction,'MOM'),
                         backgroundColor: 'blue',
                         borderColor: 'blue'
                       },

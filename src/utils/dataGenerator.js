@@ -51,4 +51,19 @@ const weightedMeanMaker = (sendingData, str, property) => {
     return s;
 }
 
-export {arrayMaker, valueMaker, weightedMeanMaker}
+
+const meanMaker = (sendingData, str, property) => {
+    const s = []
+    for(let i=0;i<arrayMaker(sendingData,str).length;i++){
+        let qt = []
+        Object.keys(sendingData).forEach(key => {
+            if(sendingData[key][str] === arrayMaker(sendingData,str)[i]){
+                qt.push(sendingData[key][property])
+            }
+        })
+        const sumEntry = qt.reduce((acc, curr) => acc + ((typeof curr) === 'number' ? curr : parseFloat(curr.replace(/,/g,''))),0)
+        s.push(sumEntry/qt.length)
+    }
+    return s;
+}
+export {arrayMaker, valueMaker, weightedMeanMaker, meanMaker}
