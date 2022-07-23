@@ -1,7 +1,7 @@
 import axios from "axios";
 import { REGISTER_FAILURE, REGISTER_SUCCESS, REGISTER_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from "./types";
 
-export const register = (name,password,email,zone_access, branch_access, plant_access,table) => async(dispatch) => {
+export const register = (name,password,email,zone_access, branch_access, plant_access,role,table) => async(dispatch) => {
     try{
         let obj
         if(table === 'user'){
@@ -11,7 +11,8 @@ export const register = (name,password,email,zone_access, branch_access, plant_a
                 email,
                 zone_access,
                 branch_access,
-                plant_access 
+                plant_access,
+                role 
             }
         }
         else if(table === 'admin'){
@@ -24,6 +25,12 @@ export const register = (name,password,email,zone_access, branch_access, plant_a
         dispatch({type: REGISTER_REQUEST})
         const {data} = await axios.post(`http://localhost:8080/${table}/register`,obj)
         dispatch({type: REGISTER_SUCCESS, payload: data})
+        const {data: dataLogin} = await axios.post(`http://localhost:8080/${table}/login`, {
+            email,
+            password
+        })
+        console.log(dataLogin)
+        dispatch({type: LOGIN_SUCCESS,payload: dataLogin})
     }
     catch(err){
         dispatch({type: REGISTER_FAILURE, payload: err.message})
