@@ -66,4 +66,14 @@ const meanMaker = (sendingData, str, property) => {
     }
     return s;
 }
-export {arrayMaker, valueMaker, weightedMeanMaker, meanMaker}
+
+const minMaxDiffMaker = (dummyData) => {
+    const max = valueMaker(dummyData,'MICRO MARKET','MAX')
+    const min = valueMaker(dummyData,'MICRO MARKET','MIN')
+    let diff = []
+    for(let i=0;i<max.length;i++){
+        diff.push(max[i]-min[i])
+    }
+    return diff    
+}
+export {arrayMaker, valueMaker, weightedMeanMaker, meanMaker, minMaxDiffMaker}

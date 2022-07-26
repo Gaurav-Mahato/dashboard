@@ -29,7 +29,6 @@ export const register = (name,password,email,zone_access, branch_access, plant_a
             email,
             password
         })
-        console.log(dataLogin)
         dispatch({type: LOGIN_SUCCESS,payload: dataLogin})
     }
     catch(err){
@@ -49,7 +48,6 @@ export const login = (email, password, table) => async(dispatch) => {
         localStorage.setItem("userInfo",JSON.stringify(data))
     }
     catch(err){
-        console.log(err)
         dispatch({type: LOGIN_FAILURE, payload: err})
     }
 }
