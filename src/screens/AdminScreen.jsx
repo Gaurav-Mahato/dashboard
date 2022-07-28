@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import {Form, Button} from "react-bootstrap"
 import axios from "axios";
 import { logout } from "../actions/authActions";
+import FormContainer from "../components/FormContainer";
 
 const AdminScreen = () => {
     const navigate = useNavigate()
@@ -44,7 +45,7 @@ const AdminScreen = () => {
     }
     useEffect(() => {
         if(user === undefined || user === {}){
-            navigate("/admin-register")
+            navigate("/admin-login")
         }
     },[navigate,user])
     const logoutHandler = (e) => {
@@ -53,32 +54,38 @@ const AdminScreen = () => {
     }
     return(
         <>
-            <h3>Admin Panel</h3>
+            
+            <h3 className="text-center">Admin Panel</h3>
             {success && <p>Successfully Added</p>}
-            <button onClick={() => setMode('zone')}>Zone</button>
-            <button onClick={() => {
-                setMode('branch')
-                axios.get('http://localhost:8080/data/get-zone').then(res => setZones(res.data))  
-            }}>Branch</button>
-            <button onClick={() => {
-                setMode('plant')
-                axios.get('http://localhost:8080/data/get-zone').then(res => setZones(res.data))  
-            }}>Plant</button>
-            <Button onClick={logoutHandler}>Log out</Button>
-
+            <div style={{display: 'flex',justifyContent: 'center'}}>
+                <Button style={{margin: '0 10px 40px'}} onClick={() => setMode('zone')}>Zone</Button>
+                <Button style={{margin: '0 10px 40px'}} onClick={() => {
+                    setMode('branch')
+                    axios.get('http://localhost:8080/data/get-zone').then(res => setZones(res.data))  
+                }}>Branch</Button>
+                <Button style={{margin: '0 10px 40px'}} onClick={() => {
+                    setMode('plant')
+                    axios.get('http://localhost:8080/data/get-zone').then(res => setZones(res.data))  
+                }}>Plant</Button>
+                <Button style={{margin: '0 10px 40px'}} onClick={logoutHandler}>Log out</Button>
+            </div>
             {/* Zone section */}
             {mode === 'zone' && <div>
+            <FormContainer>
                 <h5>Add a zone</h5>
                 <Form onSubmit={submitHandler}>
                     <label htmlFor="zone">Zone: </label>
-                    <input type="text" name="zone" value={zone} onChange={(e) => setZone(e.target.value)}></input>
-                    <Button type="submit">Update</Button>
+                    <input type="text" name="zone" value={zone} onChange={(e) => setZone(e.target.value)}></input><br></br>
+                    <Button style={{marginTop: '15px'}} type="submit">Update</Button>
                 </Form>
+            </FormContainer>
             </div>}
 
             {/* Branch Section */}
             {mode === 'branch' && <div>
+            <FormContainer>
                 <h5>Add a branch</h5>
+                
                 <Form onSubmit={submitHandler}>
                     <label htmlFor="zone">Choose a zone: </label>
                     <select id="zone" name="zone" form="zone-name" onChange={(e) => setZone(e.target.value)}>
@@ -90,11 +97,14 @@ const AdminScreen = () => {
                     <input type="text" name="branch" value={branch} onChange={(e) => setBranch(e.target.value)} />
                     <Button type="submit">Update</Button> 
                 </Form>
+                </FormContainer>
             </div>}
 
             {/* Plant section */}
             {mode === 'plant' && <div>
+            <FormContainer>
                 <h5>Add a Plant</h5>
+                
                 <Form onSubmit={submitHandler}>
                     <label htmlFor="zone">Choose a zone: </label>
                     <select id="zone" name="zone" form="zone-name" onChange={(e) => {
@@ -115,6 +125,7 @@ const AdminScreen = () => {
                     <input type="text" name="plant" value={plant} onChange={(e) => setPlant(e.target.value)} />
                     <Button type="submit">Update</Button> 
                 </Form>
+                </FormContainer>
             </div>}
         </>
     )
