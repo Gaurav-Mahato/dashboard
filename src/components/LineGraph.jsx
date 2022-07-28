@@ -4,7 +4,7 @@ import { arrayMaker, weightedMeanMaker, meanMaker } from "../utils/dataGenerator
 
 const LineGraph = ({data,name,distinction}) => {
     return (
-      <div style={{"width": "700px", "marginBottom": "40px"}}>
+      <div style={{"marginBottom": "40px"}}>
               <h3>{name}</h3>
               <LineChart chartData={{
                   labels: arrayMaker(data,distinction),

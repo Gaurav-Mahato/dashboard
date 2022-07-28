@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AdminScreen from './screens/AdminScreen';
 import LoginScreen from './screens/LoginScreen';
 import UserScreen from './screens/UserScreen';
+import './bootstrap.min.css'
 
 const App = () => {
   return(
