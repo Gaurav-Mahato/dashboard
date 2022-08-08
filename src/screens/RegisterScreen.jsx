@@ -82,11 +82,11 @@ const RegisterScreen = ({mode}) => {
                    <Form.Control type="text" name="role" id="role" value={role} onChange={(e) => setRole(e.target.value)} /> 
                 </Form.Group>
                 </> : null}
-                <div style={{display: 'flex', justifyContent: 'space-between', margin: '15px 0'}}>
+                {mode === 'user' && <div style={{display: 'flex', justifyContent: 'space-between', margin: '15px 0'}}>
                    <Button style={{display: 'inline'}} onClick={zoneSelectionHandler}>Select Zone</Button>
                    <Button style={{display: 'inline'}} onClick={branchSelectionHandler}>Select Branch</Button>
                    <Button style={{display: 'inline'}} onClick={plantSelectionHandler}>Choose a plant</Button>
-                </div>
+                </div>}
                 {mode === 'user' ? zoneRequest && <><label htmlFor="zone">Choose a zone: </label>
                     
                     <select id="zone" name="zone" form="zone-name" onChange={(e) => setZone(e.target.value)}>
