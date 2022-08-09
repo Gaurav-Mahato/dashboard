@@ -5,10 +5,12 @@ import { register } from "../actions/authActions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FormContainer from "../components/FormContainer";
+import Message from "../components/Message";
 
 const RegisterScreen = ({mode}) => {
     const navigate = useNavigate()
     const {user} = useSelector(state => state.userLogin)
+    const {user: registerMessage,error} = useSelector(state => state.userRegister)
     const dispatch = useDispatch()
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -62,6 +64,8 @@ const RegisterScreen = ({mode}) => {
     return(
         <>
             <h3 className="text-center">{mode.toUpperCase()} Register Form</h3>
+            {error && <Message variant='danger' message={error} />}
+            {/* {registerMessage && <Message variant='success' message={registerMessage} />} */}
             <FormContainer>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
@@ -105,7 +109,7 @@ const RegisterScreen = ({mode}) => {
                 
                 
                 {mode === 'user' ? plantRequest && <><label htmlFor="plant">Choose a plant: </label>   
-                    <select id="plant" name="plant" form="plant-name" onChange={(e) => setBranch(e.target.value)}>
+                    <select id="plant" name="plant" form="plant-name" onChange={(e) => setPlant(e.target.value)}>
                         {plants && plants.length >0 && plants.map(plant => (
                             <option key={plant.plant_id} value={plant.plant_id}>{plant.name}</option>
                         ))}

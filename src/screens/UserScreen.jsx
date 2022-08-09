@@ -77,6 +77,14 @@ const UserScreen = () => {
     useEffect(() => {
         if(!user){
             navigate("/user-login")
+        }else{
+            setLocation(() => {const config = {
+                headers:{
+                    'Content-Type': "application/json",
+                    Authorization: `${user.token}`
+                }
+            }
+            axios.get("http://localhost:8080/data",config).then(res => setLocation(res.data))})
         }
     },[navigate,user])
     return(
@@ -162,6 +170,9 @@ const UserScreen = () => {
                                 ]
                               }} />
                             </div>}
+                        </Col>
+                        <Col>
+                            <BarGraph name={`Branch-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction = 'Region' quantity='Billed Quantity' colour="red" handler={valueMaker} />
                         </Col>
                     </> : null}
                 </Row>

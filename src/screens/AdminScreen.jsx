@@ -27,12 +27,15 @@ const AdminScreen = () => {
         }
         if(mode === 'zone'){
             axios.post("http://localhost:8080/admin/update",{zone},config)
+            setSuccess(true)
+            setZone('')
         }else if(mode === 'branch'){
             axios.post('http://localhost:8080/admin/update/branch',{
                 branch,
                 zone: Number(zone)
             },config)
             setSuccess(true)
+            setBranch('')
         }
         else if(mode === 'plant'){
                 axios.post('http://localhost:8080/admin/update/plant',{
@@ -40,7 +43,7 @@ const AdminScreen = () => {
                   branch: Number(branch)
                 },config)
                setSuccess(true)
-            
+               setPlant('')
         }
     }
     useEffect(() => {
@@ -113,16 +116,17 @@ const AdminScreen = () => {
                         {zones && zones.length >0 && zones.map(zone => (
                             <option key={zone.zone_id} value={zone.zone_id}>{zone.name}</option>
                         ))}
-                    </select>
+                    </select><br></br><br></br>
                     {branches && branches.length>0 && <><label htmlFor="branch">Choose a Branch: </label>
                     <select id="branch" name="branch" form="branch-name" onChange={(e) => setBranch(e.target.value)}>
                         <option value="" selected disabled hidden>Choose here</option>
                         {branches && branches.length >0 && branches.map(branch => (
                             <option key={branch.id} value={branch.id}>{branch.name}</option>
                         ))}
-                    </select></>}
+                    </select><br></br><br></br></>}
                     <label htmlFor="plant">Plant: </label>
-                    <input type="text" name="plant" value={plant} onChange={(e) => setPlant(e.target.value)} />
+                    
+                    <input type="text" name="plant" value={plant} onChange={(e) => setPlant(e.target.value)} /><br></br><br></br>
                     <Button type="submit">Update</Button> 
                 </Form>
                 </FormContainer>
