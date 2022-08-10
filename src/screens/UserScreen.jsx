@@ -28,9 +28,12 @@ const UserScreen = () => {
                 authorization: user.token
             }
         }
-        axios.post('http://localhost:8080/data/zone',{zone_name},config).then(res => setZoneData(res.data)).catch(err => console.error(err))
-        setBranchData([])
-        setPlantData([])
+        axios.post('http://localhost:8080/data/zone',{zone_name},config).then(res => {
+            setZoneData(res.data)
+            setBranchData([])
+            setPlantData([])
+        }).catch(err => console.error(err))
+        
     }
     const branchHandler = (e) => {
         e.preventDefault()
@@ -41,9 +44,12 @@ const UserScreen = () => {
                 authorization: user.token
             }
         }
-        axios.post('http://localhost:8080/data/branch',{branch_name},config).then(res => setBranchData(res.data))
-        setZoneData([])
-        setPlantData([])
+        axios.post('http://localhost:8080/data/branch',{branch_name},config).then(res => {
+            setBranchData(res.data)
+            setZoneData([])
+            setPlantData([])
+        }).catch(err => console.error(err))
+        
     }
     const plantHandler = (e) => {
         e.preventDefault()
@@ -54,7 +60,7 @@ const UserScreen = () => {
                 authorization: user.token
             }
         }
-        axios.post('http://localhost:8080/data/plant',{plant_name},config).then(res => setPlantData(res.data))
+        axios.post('http://localhost:8080/data/plant',{plant_name},config).then(res => setPlantData(res.data)).catch(err => console.error(err)) 
         setZoneData([])
         setBranchData([])
     }
@@ -99,17 +105,17 @@ const UserScreen = () => {
                             <Nav style={{marginLeft: 'auto'}}>
                                 {location && location.zone !== 'NOT PERMITTED' ? (
                                     <NavDropdown title="Zone" id='zone'>
-                                        {location.zone.map(zone => <NavDropdown.Item key="zone.zone_id" onClick={zoneHandler}>{zone.name}</NavDropdown.Item>)}
+                                        {location.zone.map(zone => <NavDropdown.Item key={zone.name} onClick={zoneHandler}>{zone.name}</NavDropdown.Item>)}
                                     </NavDropdown>
                                 ) : null}
                                 {location && location.branch !== 'NOT PERMITTED' ? (
                                     <NavDropdown title="Branch" id='branch'>
-                                        {location.branch.map(branch => <NavDropdown.Item key="branch.id" onClick={branchHandler}>{branch.name}</NavDropdown.Item>)}
+                                        {location.branch.map(branch => <NavDropdown.Item key={branch.name} onClick={branchHandler}>{branch.name}</NavDropdown.Item>)}
                                     </NavDropdown>
                                 ) : null}
                                 {location && location.plant !== 'NOT PERMITTED' ? (
                                     <NavDropdown title="Plant" id='plant'>
-                                        {location.plant.map(plant => <NavDropdown.Item key="plant.plant_id" onClick={plantHandler}>{plant.name}</NavDropdown.Item>)}
+                                        {location.plant.map(plant => <NavDropdown.Item key={plant.name} onClick={plantHandler}>{plant.name}</NavDropdown.Item>)}
                                     </NavDropdown>
                                 ) : null}
                                 <NavDropdown title={user ? user.name : 'User'} id="user">
@@ -128,13 +134,13 @@ const UserScreen = () => {
                 <Row>
                     {zoneData && zoneData.length !== 0 ? <>
                         <Col md={6}>
-                           <BarGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Material Number" quantity="Billed Quantity" colour="red" handler={valueMaker} />
+                           <BarGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Material Number" quantity="Billed Quantity" colour="rgba(255, 99, 132, 0.5)" handler={valueMaker} />
                         </Col>
                         <Col md={6}>
                             <LineGraph name={`Material-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Material Number" />
                         </Col>
                         <Col md={6}>
-                            <BarGraph name={`Customer Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Customer group" quantity="Billed Quantity" colour="red" handler={valueMaker} />
+                            <BarGraph name={`Customer Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Customer group" quantity="Billed Quantity" colour="rgba(255, 99, 132, 0.5)" handler={valueMaker} />
                         </Col>
                         <Col md={6}>
                             <LineGraph name={`Customer-Group Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction="Customer group" />
@@ -172,7 +178,7 @@ const UserScreen = () => {
                             </div>}
                         </Col>
                         <Col>
-                            <BarGraph name={`Branch-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction = 'Region' quantity='Billed Quantity' colour="red" handler={valueMaker} />
+                            <BarGraph name={`Branch-Wise Data of ${zoneData[0].Zone}`} data={zoneData} distinction = 'Region' quantity='Billed Quantity' colour="rgba(255, 99, 132, 0.5)" handler={valueMaker} />
                         </Col>
                     </> : null}
                 </Row>
@@ -199,7 +205,7 @@ const UserScreen = () => {
                         <Col md={6}>
                             <LineGraph name={`Customer group MOM PAM asp analysis of ${branchData[0].Region}`} data={branchData} distinction="Customer group" />
                         </Col>
-                        <Col md={6}>
+                        {/* <Col md={6}>
                             <div style={{"marginBottom": "40px"}}>
                             <h3>Web Price and asp comparison</h3>
                             <BarChart chartData={{
@@ -221,7 +227,7 @@ const UserScreen = () => {
                                 ]
                               }} />
                             </div> 
-                        </Col>
+                        </Col> */}
                         <Col md={6}>
                             {dummyData && <div style={{"marginBottom": "40px"}}>
                             <h3>ASP trends of Micro Market</h3>
