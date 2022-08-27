@@ -11,13 +11,13 @@ const LineGraph = ({data,name,distinction}) => {
                   datasets: [
                       {
                           label: 'PAM',
-                          data : meanMaker(data,distinction,'PAM'),
+                          data : meanMaker(data,distinction,'PAM per cm'),
                           backgroundColor: 'red',
                           borderColor: 'red'
                       },
                       {
                         label: 'MOM',
-                        data: meanMaker(data,distinction,'MOM'),
+                        data: meanMaker(data,distinction,'MOM per cm'),
                         backgroundColor: 'blue',
                         borderColor: 'blue'
                       },

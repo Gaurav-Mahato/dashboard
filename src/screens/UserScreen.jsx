@@ -53,16 +53,21 @@ const UserScreen = () => {
     }
     const plantHandler = (e) => {
         e.preventDefault()
-        const plant_name = e.target.innerText
+        const plant_name = `${e.target.innerHtml}`
+        console.log(plant_name)
         const config = {
             headers: {
                 'Content-Type': "application/json",
                 authorization: user.token
             }
         }
-        axios.post('http://localhost:8080/data/plant',{plant_name},config).then(res => setPlantData(res.data)).catch(err => console.error(err)) 
-        setZoneData([])
-        setBranchData([])
+        console.log(config)
+        axios.post('http://localhost:8080/data/plant',{plant_name},config).then(res => {
+            setPlantData(res.data)
+            setZoneData([])
+            setBranchData([])
+        }).catch(err => console.error(err)) 
+        
     }
     const [location, setLocation] = useState(() => {
         if(user){
