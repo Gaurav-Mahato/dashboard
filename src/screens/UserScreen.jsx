@@ -61,7 +61,6 @@ const UserScreen = () => {
                 authorization: user.token
             }
         }
-        console.log(config)
         axios.post('http://localhost:8080/data/plant',{plant_name},config).then(res => {
             setPlantData(res.data)
             setZoneData([])
